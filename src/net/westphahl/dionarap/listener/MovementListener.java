@@ -43,6 +43,7 @@ public class MovementListener implements KeyListener, ActionListener {
 		}
 		
 		mainWindow.drawPawns();
+		mainWindow.requestFocus();
 	}
 
 }
