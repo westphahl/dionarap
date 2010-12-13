@@ -5,24 +5,32 @@ import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.io.File;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import de.fhwgt.dionarap.model.objects.AbstractPawn;
+import de.fhwgt.dionarap.model.objects.Ammo;
+import de.fhwgt.dionarap.model.objects.Destruction;
+import de.fhwgt.dionarap.model.objects.Obstacle;
+import de.fhwgt.dionarap.model.objects.Opponent;
 import de.fhwgt.dionarap.model.objects.Player;
+import de.fhwgt.dionarap.model.objects.Vortex;
 
 /**
  * The playboard which contains the fields for the tokens.
  * 
  * @author Simon Westphahl
  */
+@SuppressWarnings("serial")
 public class Playboard extends JPanel {
 	
 	private int rows;
 	private int cols;
 	private JLabel fields[][];
+	private MainWindow mainWindow;
 	private Dimension fieldDimension = new Dimension(50, 50);
 	private ImageIcon playerIcons[] = new ImageIcon[10];
 	private ImageIcon enemyIcon;
@@ -30,8 +38,8 @@ public class Playboard extends JPanel {
 	private ImageIcon destructionIcon;
 	private ImageIcon barrierIcon;
 	private ImageIcon ammoIcon;
-	public ImageIcon gameOverIcon;
-	public ImageIcon gameWonIcon;
+	private ImageIcon gameOverIcon;
+	private ImageIcon gameWonIcon;
 	
 	/**
 	 * Creates a playboard according to the supplied
@@ -40,14 +48,16 @@ public class Playboard extends JPanel {
 	 * @param rows Number of rows.
 	 * @param cols Number of columns.
 	 */
-	public Playboard(int rows, int cols) {
+	public Playboard(MainWindow mWin, int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
 		
+		this.mainWindow = mWin;
+		
 		this.fields = new JLabel[this.rows][this.cols];
 		
-		/* Set the default theme (Dracula) */
-		this.setDefaultTheme();
+		/* Set the default theme */
+		this.setTheme("Dracula");
 		
 		/* Use a grid layout */
 		this.setLayout(new GridLayout(this.rows, this.cols));
@@ -70,6 +80,33 @@ public class Playboard extends JPanel {
 			}
 		}
 		this.setVisible(true);
+	}
+	
+	/**
+	 * Function for (re)drawing the pawns.
+	 */
+	public void drawPawns() {
+		int numPawns = this.mainWindow.getDRModel().getAllPawns().length;
+		AbstractPawn aPawns[] = new AbstractPawn[numPawns];
+		aPawns = this.mainWindow.getDRModel().getAllPawns();
+		
+		this.eraseFields();
+		
+		for (int i = 0; i < numPawns; i++) {
+			if (aPawns[i] instanceof Player) {
+				 this.drawPlayer(aPawns[i]);
+			} else if (aPawns[i] instanceof Destruction) {
+				this.drawDestroyedField(aPawns[i]);
+			} else if (aPawns[i] instanceof Opponent) {
+				this.drawEnemy(aPawns[i]);
+			} else if (aPawns[i] instanceof Obstacle) {
+				this.drawBarrier(aPawns[i]);
+			} else if (aPawns[i] instanceof Vortex) {
+				this.drawVortex(aPawns[i]);
+			} else if (aPawns[i] instanceof Ammo) {
+				this.drawAmmo(aPawns[i]);
+			}
+		}
 	}
 	
 	/**
@@ -138,10 +175,10 @@ public class Playboard extends JPanel {
 		}
 	}
 	
-	public void setDefaultTheme() {
+	public void setTheme(String themeName) {
 		String themePath = System.getProperty("user.dir") 
 			+ File.separator + "themes"
-			+ File.separator + "dracula" + File.separator;
+			+ File.separator + themeName + File.separator;
 		
 		this.playerIcons[0] = new ImageIcon(themePath + "player.gif");
 		for (int i = 1; i < this.playerIcons.length; i++) {
@@ -153,8 +190,16 @@ public class Playboard extends JPanel {
 		this.destructionIcon = new ImageIcon(themePath + "destruction.gif");
 		this.barrierIcon = new ImageIcon(themePath + "obstacle.gif");
 		this.ammoIcon = new ImageIcon(themePath + "ammo.png");
-		this.gameOverIcon = new ImageIcon(themePath + "gameover.gif");
-		this.gameWonIcon = new ImageIcon(themePath + "player.gif");
+		this.gameOverIcon = new ImageIcon(themePath + "loss.gif");
+		this.gameWonIcon = new ImageIcon(themePath + "win.gif");
+	}
+
+	public Icon getGameWonIcon() {
+		return this.gameWonIcon;
+	}
+
+	public Icon getGameOverIcon() {
+		return this.gameOverIcon;
 	}
 
 

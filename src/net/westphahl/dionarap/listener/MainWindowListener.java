@@ -11,7 +11,7 @@ public class MainWindowListener implements ComponentListener, WindowListener {
 
 	private void setNavigatorVisible(ComponentEvent e, boolean visible) {
 		MainWindow mWin = (MainWindow) e.getComponent();
-		mWin.navigator.setVisible(visible);
+		mWin.getNavigator().setVisible(visible);
 	}
 	
 	@Override
@@ -22,7 +22,7 @@ public class MainWindowListener implements ComponentListener, WindowListener {
 	@Override
 	public void componentMoved(ComponentEvent e) {
 		MainWindow mWin = (MainWindow) e.getComponent();
-		mWin.navigator.setPosition();
+		mWin.getNavigator().setPosition();
  	}
 
 	@Override

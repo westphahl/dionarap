@@ -36,7 +36,7 @@ public class DionaRap {
 	    catch (IllegalAccessException e) {
 	    	System.exit(1);
 	    }
-		MainWindow mwindow = new MainWindow("DionaRap");
+		new MainWindow("DionaRap");
 	}
 
 }

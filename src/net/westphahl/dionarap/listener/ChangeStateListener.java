@@ -32,7 +32,9 @@ public class ChangeStateListener implements DionaRapListener {
 	 */
 	@Override
 	public void modelChanged(DionaRapChangedEvent e) {
-		this.mainWindow.drawPawns();
+		this.mainWindow.getPlayboard().drawPawns();
+		this.mainWindow.getNavigator().setScore(
+				this.mainWindow.getDRModel().getScore());
 	}
 
 	/**
@@ -44,16 +46,16 @@ public class ChangeStateListener implements DionaRapListener {
 			if (e.isGameWon()) {
 				JOptionPane.showMessageDialog(this.mainWindow, "Winner!",
 						"You won ...", JOptionPane.INFORMATION_MESSAGE, 
-						this.mainWindow.playboard.gameWonIcon);
+						this.mainWindow.getPlayboard().getGameWonIcon());
 			} else {
 				JOptionPane.showMessageDialog(this.mainWindow, "Game Over!",
 						"You lost ...", JOptionPane.INFORMATION_MESSAGE, 
-						this.mainWindow.playboard.gameOverIcon);
+						this.mainWindow.getPlayboard().getGameOverIcon());
 			}
 			
-			this.mainWindow.navigator.setScore(
-					this.mainWindow.drModel.getScore());
-			this.mainWindow.navigator.startButton.setEnabled(true);
+			this.mainWindow.getNavigator().setScore(
+					this.mainWindow.getDRModel().getScore());
+			this.mainWindow.getNavigator().getStartButton().setEnabled(true);
 		}
 	}
 

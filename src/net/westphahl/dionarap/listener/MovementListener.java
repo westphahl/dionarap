@@ -24,7 +24,7 @@ public class MovementListener implements KeyListener, ActionListener {
 		int cmd = (int) e.getKeyChar() - 48;
 		
 		if ((cmd >= 0) && (cmd < 10) && (cmd != 5)) {
-			mainWindow.drController.movePlayer(cmd);
+			mainWindow.getDRController().movePlayer(cmd);
 		}
 	}
 
@@ -36,13 +36,7 @@ public class MovementListener implements KeyListener, ActionListener {
 		
 		int command = Integer.valueOf(e.getActionCommand());
 		
-		if (command == 5) {
-			mainWindow.drController.shoot();
-		} else {
-			mainWindow.drController.movePlayer(command);
-		}
-		
-		mainWindow.drawPawns();
+		mainWindow.getDRController().movePlayer(command);
 		mainWindow.requestFocus();
 	}
 

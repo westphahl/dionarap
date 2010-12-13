@@ -1,7 +1,6 @@
 package net.westphahl.dionarap.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Rectangle;
 
 import javax.swing.JButton;
@@ -20,12 +19,13 @@ import net.westphahl.dionarap.listener.NewGameListener;
  * @author westphahl
  *
  */
+@SuppressWarnings("serial")
 public class Navigator extends JWindow {
 	
 	private Keypad keypad;
 	private ScoreArea scoreArea = new ScoreArea();
 	private Rectangle bounds;
-	public JButton startButton = new JButton("New Game");
+	private JButton startButton = new JButton("New Game");
 	private MainWindow mainWindow;
 	
 	/**
@@ -78,6 +78,10 @@ public class Navigator extends JWindow {
 	public void setScore(int score) {
 		this.scoreArea.score.setText(Integer.toString(score));
 	}
+	
+	public JButton getStartButton() {
+		return this.startButton;
+	}
 }
 
 /**
@@ -86,6 +90,7 @@ public class Navigator extends JWindow {
  * @author westphahl
  *
  */
+@SuppressWarnings("serial")
 class ScoreArea extends JPanel {
 	
 	public JLabel scoreLabel = new JLabel("Score");

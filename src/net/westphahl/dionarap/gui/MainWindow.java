@@ -10,13 +10,6 @@ import net.westphahl.dionarap.listener.MovementListener;
 import net.westphahl.dionarap.listener.WeaponListener;
 import de.fhwgt.dionarap.controller.DionaRapController;
 import de.fhwgt.dionarap.model.data.DionaRapModel;
-import de.fhwgt.dionarap.model.objects.AbstractPawn;
-import de.fhwgt.dionarap.model.objects.Ammo;
-import de.fhwgt.dionarap.model.objects.Destruction;
-import de.fhwgt.dionarap.model.objects.Obstacle;
-import de.fhwgt.dionarap.model.objects.Opponent;
-import de.fhwgt.dionarap.model.objects.Player;
-import de.fhwgt.dionarap.model.objects.Vortex;
 
 /**
  * The DionaRap main window
@@ -26,14 +19,16 @@ import de.fhwgt.dionarap.model.objects.Vortex;
  * @author westphahl
  *
  */
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	
 	private int rows = 10;
 	private int cols = 10;
-	public Playboard playboard;
-	public Navigator navigator;
-	public DionaRapModel drModel;
-	public DionaRapController drController;
+	private MenuBar menuBar;
+	private Playboard playboard;
+	private Navigator navigator;
+	private DionaRapModel drModel;
+	private DionaRapController drController;
 	
 	/**
 	 * Constructor of the main window
@@ -44,8 +39,11 @@ public class MainWindow extends JFrame {
 	public MainWindow(String title) {
 		super(title);
 		
+		this.menuBar = new MenuBar();
+		this.setJMenuBar(this.menuBar);
+		
 		/* Add the playboard */
-		this.playboard = new Playboard(this.rows, this.cols);
+		this.playboard = new Playboard(this, this.rows, this.cols);
 		this.add(this.playboard, BorderLayout.CENTER);
 		
 		/* Exit application when window is closed */
@@ -72,39 +70,28 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
-	/**
-	 * Function for (re)drawing the pawns.
-	 */
-	public void drawPawns() {
-		int numPawns = this.drModel.getAllPawns().length;
-		AbstractPawn aPawns[] = new AbstractPawn[numPawns];
-		aPawns = this.drModel.getAllPawns();
-		
-		this.playboard.eraseFields();
-		
-		for (int i = 0; i < numPawns; i++) {
-			if (aPawns[i] instanceof Player) {
-				 this.playboard.drawPlayer(aPawns[i]);
-			} else if (aPawns[i] instanceof Destruction) {
-				this.playboard.drawDestroyedField(aPawns[i]);
-			} else if (aPawns[i] instanceof Opponent) {
-				this.playboard.drawEnemy(aPawns[i]);
-			} else if (aPawns[i] instanceof Obstacle) {
-				this.playboard.drawBarrier(aPawns[i]);
-			} else if (aPawns[i] instanceof Vortex) {
-				this.playboard.drawVortex(aPawns[i]);
-			} else if (aPawns[i] instanceof Ammo) {
-				this.playboard.drawAmmo(aPawns[i]);
-			}
-		}
-	}
-	
 	public void startGame() {
 		this.drModel = new DionaRapModel();
 		this.drController = new DionaRapController(drModel);
 		this.drModel.addModelChangedEventListener(
 				new ChangeStateListener(this));
-		this.drawPawns();
-		this.navigator.startButton.setEnabled(false);
+		this.playboard.drawPawns();
+		this.navigator.getStartButton().setEnabled(false);
+	}
+	
+	public Navigator getNavigator() {
+		return this.navigator;
+	}
+	
+	public Playboard getPlayboard() {
+		return this.playboard;
+	}
+
+	public DionaRapModel getDRModel() {
+		return this.drModel;
+	}
+
+	public DionaRapController getDRController() {
+		return this.drController;
 	}
 }

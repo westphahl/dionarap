@@ -5,9 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
 
-import de.fhwgt.dionarap.controller.DionaRapController;
-import de.fhwgt.dionarap.model.data.DionaRapModel;
-
 import net.westphahl.dionarap.gui.MainWindow;
 import net.westphahl.dionarap.gui.Navigator;
 

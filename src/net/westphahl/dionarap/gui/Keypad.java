@@ -1,12 +1,12 @@
 package net.westphahl.dionarap.gui;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import net.westphahl.dionarap.listener.MovementListener;
+import net.westphahl.dionarap.listener.WeaponListener;
 
 /**
  * The keypad which holds the buttons for in game navigation.
@@ -14,11 +14,10 @@ import net.westphahl.dionarap.listener.MovementListener;
  * @author westphahl
  *
  */
+@SuppressWarnings("serial")
 public class Keypad extends JPanel {
 	
 	private JButton keys[] = new JButton[9];
-	private Dimension keyDimension = new Dimension(50, 50);
-	
 	/**
 	 * Constructor for the keypad
 	 * 
@@ -27,13 +26,20 @@ public class Keypad extends JPanel {
 	public Keypad() {
 		/* Use a grid layout for the keypad */
 		this.setLayout(new GridLayout(3, 3));
+		int index;
 		
 		for (int i = 3; i > 0; i--) {
 			for (int k = 2; k >= 0; k--) {
-				keys[i * 3 - k - 1] = new JButton(Integer.toString(i * 3 - k));
-				keys[i * 3 - k -1].setActionCommand((Integer.toString(i * 3 - k)));
-				keys[i * 3 - k -1].addActionListener(new MovementListener());
-				this.add(keys[i * 3 - k - 1]);
+				index = i * 3 - k -1;
+				keys[index] = new JButton(Integer.toString(index + 1));
+				keys[index].setActionCommand((Integer.toString(index + 1)));
+				if (index == 4) {
+					keys[index].addActionListener(new WeaponListener());
+				} else {
+					keys[index].addActionListener(new MovementListener());
+				}
+				
+				this.add(keys[index]);
 			}
 		}
 		this.setVisible(true);

@@ -1,11 +1,16 @@
 package net.westphahl.dionarap.listener;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import net.westphahl.dionarap.gui.MainWindow;
+import javax.swing.JComponent;
 
-public class WeaponListener implements KeyListener {
+import net.westphahl.dionarap.gui.MainWindow;
+import net.westphahl.dionarap.gui.Navigator;
+
+public class WeaponListener implements KeyListener, ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -21,8 +26,18 @@ public class WeaponListener implements KeyListener {
 		int cmd = (int) e.getKeyChar() - 48;
 		
 		if ((cmd == 5)) {
-			mainWindow.drController.shoot();
+			mainWindow.getDRController().shoot();
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Navigator navigator = (Navigator) (
+				(JComponent) e.getSource()).getTopLevelAncestor();
+		MainWindow mainWindow = navigator.getMainWindow();
+		
+		mainWindow.getDRController().shoot();
+		mainWindow.requestFocus();
 	}
 
 }
