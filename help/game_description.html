@@ -1,0 +1,137 @@
+<!DOCTYPE html> 
+
+<html lang="de"> 
+<head> 
+    <title>DionaRap - Game Description</title>
+    <meta charset="utf-8">
+</head> 
+<body >
+<h1>Das Spiel „DionaRap“</h1>
+
+<img src="./img1.png" />
+
+<h2>1. Über „DionaRap“</h2>
+<p>„DionaRap“ ist ein strategisches Spiel, in dem der Spieler die Rolle des Protagonisten einnimmt und sich gezielt von den Antagonisten entfernen muss. Es ist vorgesehen, dass „DionaRap“ nur von jeweils einem Spieler gespielt werden kann. Das Spiel enthält keine 3D- Komponenten und wird auf einer schachbrettförmigen Oberfläche gespielt.
+DionaRap  wurde in  Projektarbeiten von Studierenden der Hochschule Ravensburg-Weingarten entworfen und implementiert.
+Urheber dieses Spiels sind Frau Lydia Vogel, Studentin Studiengang AI und Herr Christoph Sonntag  Student Studiengang WI. Erweitert auf Multi-Threading wurde das Spiel von Kristikan Prsir, ebenfalls Student im Studiengang Angewandte Informatik.</p>
+ 
+<h2>2. Ziel des Spiels</h2>
+<p>Ziel des Spieles ist, dass sich der Spieler (Protagonist) durch gezieltes Bewegen auf dem Spielfeld fortbewegt und dabei alle vorhandenen Feinde (Antagonisten) vernichtet.
+Die Antagonisten bewegen sich auf den Protagonisten zu, so dass dieser versuchen muss seinen Feinden zu entkommen. Durch geschickte Bewegung des Spielers auf dem Spielfeld kann der Protagonist erreichen, dass sich die Feinde selbst durch Ineinanderlaufen oder Auflaufen auf ein Hindernis zerstören. Durch Einsatz seiner Waffe kann der Spieler auch einen Antagonisten gezielt abschießen.</p>
+<p>Der Spieler hat das Spiel gewonnen, wenn alle Antagonisten zerstört wurden. Der Spieler hat verloren, wenn er von einem Antagonisten eingeholt wird und der Antagonist die Spielposition des Protagonisten besetzt.</p>
+ 
+<p>Das Spiel kann in zwei Modi gespielt werden:
+<dl>
+<dt>Standardmodus (SD-Modus)</dt>
+<dd>Das Spiel läuft in einem Thread ab. Die Antagonisten bewegen sich nur nach einer Bewegung des Spielers.</dd>
+<dt>Multi-Threading Modus (MT-Modus)</dt>
+<dd>Für jeden Gegner wird ein eigener Thread erzeugt. Die Gegner bewegen sich selbständig auf den Spieler zu, auch wenn dieser keine Bewegung ausführt. Der Spieler läuft im Haupt-Thread der Anwendung.</dd>
+</dl>
+</p>
+ 
+<h2>3. Spielfiguren auf dem Feld</h2>
+ 
+<p>Folgende Spielfiguren können auf dem Spielfeld platziert werden:
+<dl>
+<dt>ein Protagonist</dt>
+<dd>Im SD-Modus  wird der Spieler am Spielanfang in der Mitte des Spielbrettes platziert. Er hat beliebig viel Munition zum Schießen</dd>
+<dd>Im MT-Modus kann sich der Spieler zu Beginn auf jeder beliebigen Position befinden. Seine Munition kann auf  0 - n Schüsse begrenzt sein.</dd>
+<dt>ein oder mehrere Antagonisten</dt>
+<dt>ein oder mehrere Hindernisse</dt>
+<dt>ein oder mehrere Vortexe</dt>
+<dd>Im  SD-Modus werden 4 Vortexobjekte erzeugt. In  jeder Ecke des Spielbretts befindet sich ein Vortex</dd>
+<dd>Im MT-Modus können beliebig viele Vortexobjekte auf beliebigen Feldern des Spielbretts positioniert sein</dd>
+<dt>Nur im MT-Modus: Ein oder mehrerer Munitionsobjekte auf beliebigen Positionen des Spielbretts</dt>
+</dl>
+</p>
+ 
+<h4>Positionen der Spielfiguren auf dem Spielfeld</h4>
+<p>Die Positionen der Spielfiguren wird bei jedem Spielneustart rein zufällig festgesetzt, ist somit nicht vorhersehbar und damit nicht beeinflussbar.<br>
+Nachdem ein Protagonist ein Vortexobjekt erreicht hat, wird er erneut an eine zufällige, freie Stelle auf dem Spielfeld portiert.</p>
+ 
+<h3>Protagonisten</h3>
+ 
+<img src="./img2.jpg" />
+ 
+<p>Der Spieler von „DionaRap“ übernimmt die Rolle des Protagonisten. Es kann sich nur ein Protagonist auf dem Spielfeld befinden.<br />
+Der Protagonist besitzt eine "Blickrichtung",  die von der letzten Bewegung abhängig ist.</p>
+ 
+<h4>Fortbewegung des Protagonisten auf dem Spielfeld</h4>
+<p>Der Protagonist kann sich pro Zug nur einen Schritt auf eines der acht angrenzenden Felder bewegen. Hindernisse, Gegner, sowie die Ränder des Spielfelds begrenzen die Bewegung.</p>
+ 
+<h4>Waffe des Protagonisten</h4>
+<img src="./img3.png" />
+<p>Während der Antagonist selbst keine aktive Waffe besitzt, hat der Spieler die Möglichkeit einen Antagonisten aktiv zu vernichten, indem er seine „Waffe“ gegen ihn einsetzt.<br>
+Im SD-Modus wird die Munition nach zwei Seiten abgefeuert. Diese Aktion des Spielers  wird analog einer Bewegung gewertet; es bewegen sich also alle Gegner auf den Spieler zu und es werden Punkte abgezogen, sollte kein Gegner getroffen werden.<br>
+Die jeweilige „Blickrichtung“ (siehe Screenshot) des Protagonisten ist NICHT die Schussrichtung. Der Protagonist kann jeweils nur, ausgehend von seiner „Blickrichtung“, nach rechts und links seine Waffe jeweils zwei Felder weit, abfeuern.<br>
+Durch erfolgreiches Einsetzen der Waffe verwandeln sich getroffene Gegner ebenfalls in Hindernisse.<br></p>
+
+<p>Im MT-Modus wird nur nach einer Seiten Munition abgefeuert und zwar immer in Blickrichtung des Spielers. Der Spieler kann allerdings nur solange seine Waffe benutzen, solange er noch Munition besitzt. Durch erfolgreiches Einsetzen der Waffe verwandeln sich getroffene Gegner ebenfalls in Hindernisse.<br>
+Durch einsammeln von Munitionsobjekten auf dem Spielfeld kann der Spieler seine Anzahl von Schüssen erhöhen.</p>
+ 
+<h3>Antagonisten</h3>
+
+<img src="./img4.png" />
+<p>Die Gegner des Protagonisten sind die Antagonisten. Zu Beginn des Spieles befinden sich mehrere Antagonisten an zufälligen Positionen auf dem Spielfeld. Die Anzahl der Antagonisten ist frei wählbar.</p>
+ 
+<h4>Fortbewegung der Antagonisten auf dem Spielfeld</h4>
+<p>Die Bewegungen der Antagonisten auf dem Spielfeld folgen bestimmten Regeln und können vom Spieler nicht direkt beeinflusst werden.<br>
+Im SD-Modus bewegen sich die Gegner nur einer Bewegung des Spielers. Bleibt der Spieler auf seiner Position stehen bewegen sich auch die Gegner nicht. Die Antagonisten bewegen sich nach dem Prinzip des „kürzesten Pfades“ auf den Protagonisten zu.<br>
+Im MT-Modus wird jedem Gegner ein eigner Thread zugeordnet. Die Gegner können sich damit unabhängig vom Spieler selbständig bewegen, auch wenn der Spieler keine Aktivität zeigt. Nach einer einstellbaren Startzeit beginnen die Gegner sich selbständig auf den Spieler zu zubewegen. Die Geschwindigkeit, mit der sich die Antagonisten bewegen ist ebenfalls einstellbar. Die Bewegung jedes Gegners wird über den A*-Algorithmus berechnet.<br>
+Hindernisse, Vortex- und Munitionsobjekte wechseln ihre Position während eines Spieles nicht, bzw. reagieren nicht auf die Bewegung des Protagonisten.</p>
+   
+ 
+<h3>Hindernisse</h3>
+
+<img src="./img5.png" />
+<p>Eine Hilfe für die Protagonisten sind die so genannten Hindernisse auf dem Spielfeld. Auch hier ist die Anzahl von Hindernissen frei wählbar.<br>
+Die Hindernisse werden zufällig auf dem Spielfeld verteilt. Wenn sich ein Hindernis auf einem der Felder im Spiel befindet, kann ein Spieler dieses nicht überqueren. Gleiches gilt für einen Antagonisten, wobei sich dieser beim Hineinlaufen in ein Hindernis selbst zerstört und ebenfalls zum Hindernis an dieser Stelle wird.<br>
+Hindernisse wechseln ihre Position während eines Spieles nicht.</p>
+
+
+<h3>Vortexobjekte</h3>
+
+<img src="./img6.png" />
+<p>Im SD-Modus befindet sich in jeder Ecke des Spielfelds ein Vortex. Auf Gegner und Hindernisse haben diese Felder keinerlei Auswirkung. Betritt der Spieler einen Vortex, so wird er auf ein zufälliges, freies Feld im Spiel versetzt. Das Benutzen des Vortex birgt ein gewisses Risiko, da sich die Gegner erst nach der Neupositionierung bewegen, und auch ein Versetzen direkt neben einen Gegner möglich ist. Dies ist jedoch oft die einzige Möglichkeit zu entkommen.<br>
+Im MT-Modus können beliebig viele Vortexobjekte auf beliebigen Positionen im Spielfeld verteilt werden.<br>
+Vortexobjekte wechseln ihre Position während eines Spieles nicht.</p>
+ 
+      
+<h2>4. Sieg und Niederlage</h2>
+<p>Das Spiel ist für den Spieler gewonnen, wenn sich kein Gegner mehr auf dem Spiel befindet.
+Das Spiel ist verloren, wenn ein Gegner sich auf dasselbe Feld wie das des Protagonisten setzt bzw. dieses durch Fortbewegung erreicht und damit den Protagonisten vernichtet.<br>
+Über Sieg oder Niederlage wird durch einblenden eines Dialogfensters informiert.</p>
+ 
+<h2>5. Punktestand</h2>
+<p>Über den gesamten Spielverlauf wird für den Spieler ein Zähler aktualisiert, der jede Aktion des Spielers mit Punkten bewertet. Zu Spielbeginn enthält  der Zähler 0 Punkte. Der Zähler kann nicht negativ werden.<br>
+Der Spieler kann durch Zerstören der Antagonisten  mehrere Punkte erhalten, verliert jedoch bei jeder Bewegung auf dem Spielfeld wieder einen Punkt.</p>
+ 
+<h2>6. Spielstart</h2>
+<p>Ein aktuelles Spiel kann nur durch Sieg oder Niederlage unterbrochen und neu gestartet werden.  Nachdem man einen Sieg oder eine  Niederlage erzielt hat, werden die Spielfiguren erneut auf dem Feld platziert und eine neue Runde beginnt.</p>
+ 
+<h2>7. Schwierigkeitsstufen (Spiel Levels)</h2>
+ 
+<p>In der MT-Version kann das Spiel frei konfiguriert werden.</p>
+
+<h3>Konfigurationsmöglichkeiten für das Spiel:</h3>
+<dl>
+<dt>Festlegung des Spielfeldes</dt>
+<dd>Man  kann die Anzahl der Spielfelder in horizontaler und vertikaler Richtung festlegen. Damit ist auch ein nicht quadratisches Spielfeld möglich</dd>
+<dt>Anzahl der Schüsse und Munitionsobjekte.</dt>
+<dd>Man kann die Anzahl der Schüsse auf unendlich oder auf einen endlichen Wert setzten. Bei endlicher Anzahl von Schüssen, hat man die Möglichkeit  Munitionsobjekte auf dem Spielfeld zu verteilen. Durch Aufsammeln von  Munitionsobjekten kann der Spieler seine Schusszahl erhöhen.</dd>
+<dt>Vortexobjekte können auf beliebige Postionen im Spielfeld positioniert werden</dt>
+<dt>Gegner und Hindernisse können auf bestimmten Positionen des Spielfeldes positioniert werden</dt>
+<dt>Die Wartezeit der Antagonisten bevor Sie sich das erste mal in Bewegung setzten kann frei festgelegt werden</dt>
+<dt>Die Geschwindigkeit (Wartezeit zwischen einer Bewegungen) der Antagonisten kann frei konfiguriert werden</dt>
+<dt>Eine Kollission des Antagonisten mit anderen Antagonisten oder Hindernissen kann vermieden werden</dt>
+</dl>
+ 
+<p>Die Konfiguration eines Spiels wird  in einer Leveldatei  abgelegt. Diese Leveldatei ist eine xml-Datei und kann daher mit einem normalen Text-Editor erstellt werden.<br>
+Über diese Leveldateien, die man vor einer neuen Spielrunde laden kann, ist es möglich  verschiedene Schwierigkeitsstufen einzustellen.</p>
+ 
+<h2>8. Themen</h2>
+ 
+<p>Durch die Wahl unterschiedlicher Themen, kann man dem Spiel  unterschiedliches Aussehen verleihen.<br>
+Ein Thema wird definiert durch die Verwendung bestimmter Symbole für die Spielfiguren, dazu passende Farbgebung der Spielfelder oder der Verwendung bestimmter Hintergrundbilder.</p>
+</body> 
+</html>

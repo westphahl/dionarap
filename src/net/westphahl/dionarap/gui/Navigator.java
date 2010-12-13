@@ -32,7 +32,7 @@ public class Navigator extends JWindow {
 	 * Constructor for the Navigator
 	 * 
 	 * Positions the navigator relative to the given JFrame and
-	 * adds keypad, score area and button to start a nes game.
+	 * adds keypad, score area and button to start a new game.
 	 * 
 	 * @param mainWindow
 	 */

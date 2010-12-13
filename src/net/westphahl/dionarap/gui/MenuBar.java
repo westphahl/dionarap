@@ -3,14 +3,19 @@ package net.westphahl.dionarap.gui;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
 
+import net.westphahl.dionarap.listener.GameDescriptionListener;
 import net.westphahl.dionarap.listener.LookAndFeelMenuListener;
 import net.westphahl.dionarap.listener.ThemeMenuListener;
 import net.westphahl.dionarap.listener.ToggleNavigatorMenuListener;
+import net.westphahl.dionarap.listener.TokenHelpListener;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
@@ -52,34 +57,25 @@ class ThemeMenu extends JMenu {
 	
 	public ThemeMenu() {
 		super("Themes");
+		ButtonGroup themeButtonGroup = new ButtonGroup();
 		ActionListener themeMenuListener = new ThemeMenuListener();
 		
 		File themeDir = new File(System.getProperty("user.dir") 
 			+ File.separator + "themes");
 		
-		System.out.println(themeDir);
-		
 		for (File dirEntry : themeDir.listFiles()) {
 			if (dirEntry.isDirectory()) {
-				JMenuItem themeMenuItem = new JMenuItem(dirEntry.getName());
+				JMenuItem themeMenuItem = new JRadioButtonMenuItem(dirEntry.getName());
 				themeMenuItem.setActionCommand(dirEntry.getName());
 				themeMenuItem.addActionListener(themeMenuListener);
+				
+				if ("Dracula".equals(themeMenuItem.getActionCommand())) {
+					themeMenuItem.setSelected(true);
+				}
 				this.add(themeMenuItem);
+				themeButtonGroup.add(themeMenuItem);
 			}
 		}
-		
-		/*
-		this.themeItems = new JMenuItem[installedLookAndFeels.length];
-		
-		int i = 0;
-		for (UIManager.LookAndFeelInfo lafi : installedLookAndFeels) {
-			LAFItems[i] = new JMenuItem(lafi.getName());
-			LAFItems[i].setActionCommand(lafi.getClassName());
-			LAFItems[i].addActionListener(lookAndFeelMenuListener);
-			this.add(LAFItems[i]);
-			i++;
-		}
-		*/
 	}
 }
 
@@ -90,6 +86,7 @@ class LookAndFeelMenu extends JMenu {
 	
 	public LookAndFeelMenu() {
 		super("Look & Feel");
+		ButtonGroup LAFButtonGroup = new ButtonGroup();
 		ActionListener lookAndFeelMenuListener = new LookAndFeelMenuListener();
 		UIManager.LookAndFeelInfo[] installedLookAndFeels;
 		installedLookAndFeels = UIManager.getInstalledLookAndFeels();
@@ -98,21 +95,26 @@ class LookAndFeelMenu extends JMenu {
 		
 		int i = 0;
 		for (UIManager.LookAndFeelInfo lafi : installedLookAndFeels) {
-			LAFItems[i] = new JMenuItem(lafi.getName());
+			LAFItems[i] = new JRadioButtonMenuItem(lafi.getName());
 			LAFItems[i].setActionCommand(lafi.getClassName());
 			LAFItems[i].addActionListener(lookAndFeelMenuListener);
+			if (lafi.getClassName().equals(
+					UIManager.getSystemLookAndFeelClassName())) {
+				LAFItems[i].setSelected(true);
+			}
 			this.add(LAFItems[i]);
+			LAFButtonGroup.add(LAFItems[i]);
 			i++;
 		}
 	}
 }
 
 @SuppressWarnings("serial")
-class ToggleNavigatorMItem extends JMenuItem {
+class ToggleNavigatorMItem extends JCheckBoxMenuItem {
 	
 	public ToggleNavigatorMItem() {
 		super("Navigator ausblenden");		
-		
+		this.setSelected(true);
 		this.addActionListener(new ToggleNavigatorMenuListener());
 	}
 }
@@ -140,6 +142,8 @@ class TokenHelpMItem extends JMenuItem {
 	
 	public TokenHelpMItem() {
 		super("Spielfiguren anzeigen");
+		
+		this.addActionListener(new TokenHelpListener());
 	}
 }
 
@@ -148,5 +152,7 @@ class GameDescriptionMItem extends JMenuItem {
 	
 	public GameDescriptionMItem() {
 		super("Spielbeschreibung");
+		
+		this.addActionListener(new GameDescriptionListener());
 	}
 }

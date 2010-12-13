@@ -40,6 +40,7 @@ public class Playboard extends JPanel {
 	private ImageIcon ammoIcon;
 	private ImageIcon gameOverIcon;
 	private ImageIcon gameWonIcon;
+	private String themePath;
 	
 	/**
 	 * Creates a playboard according to the supplied
@@ -176,22 +177,22 @@ public class Playboard extends JPanel {
 	}
 	
 	public void setTheme(String themeName) {
-		String themePath = System.getProperty("user.dir") 
+		this.themePath = System.getProperty("user.dir") 
 			+ File.separator + "themes"
 			+ File.separator + themeName + File.separator;
 		
-		this.playerIcons[0] = new ImageIcon(themePath + "player.gif");
+		this.playerIcons[0] = new ImageIcon(this.themePath + "player.gif");
 		for (int i = 1; i < this.playerIcons.length; i++) {
-			this.playerIcons[i] = new ImageIcon(themePath +
+			this.playerIcons[i] = new ImageIcon(this.themePath +
 					"player" + Integer.toString(i) + ".gif");
 		}
-		this.enemyIcon = new ImageIcon(themePath + "opponent.gif");
-		this.vortexIcon = new ImageIcon(themePath + "vortex.gif");
-		this.destructionIcon = new ImageIcon(themePath + "destruction.gif");
-		this.barrierIcon = new ImageIcon(themePath + "obstacle.gif");
-		this.ammoIcon = new ImageIcon(themePath + "ammo.png");
-		this.gameOverIcon = new ImageIcon(themePath + "loss.gif");
-		this.gameWonIcon = new ImageIcon(themePath + "win.gif");
+		this.enemyIcon = new ImageIcon(this.themePath + "opponent.gif");
+		this.vortexIcon = new ImageIcon(this.themePath + "vortex.gif");
+		this.destructionIcon = new ImageIcon(this.themePath + "destruction.gif");
+		this.barrierIcon = new ImageIcon(this.themePath + "obstacle.gif");
+		this.ammoIcon = new ImageIcon(this.themePath + "ammo.png");
+		this.gameOverIcon = new ImageIcon(this.themePath + "loss.gif");
+		this.gameWonIcon = new ImageIcon(this.themePath + "win.gif");
 	}
 
 	public Icon getGameWonIcon() {
@@ -202,5 +203,7 @@ public class Playboard extends JPanel {
 		return this.gameOverIcon;
 	}
 
-
+	public String getThemePath() {
+		return this.themePath;
+	}
 }
