@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Level>
+   <GameBoard>
+      <GridSize x="13" y="13" />
+   </GameBoard>
+   <Vortexes>
+      <Vortex>
+         <Location x="5"/>
+         <Destination x="10" y="10" />
+      </Vortex>
+	  <Vortex>
+         <Location x="10" y="9" />
+         <Destination/>
+      </Vortex> 
+   </Vortexes>
+   <Opponents startWaitTime="3000" avoidObstacleCollision="false" avoidOpponentCollision="false" opponentWaitTime="1500" waitTimeRandom="false">
+         <Opponent/>
+         <Opponent />
+         <Opponent />
+   </Opponents>
+   <Ammo value="1" startAmount="3">
+   		<Location/>
+   		<Location/>
+   		<Location/>
+   		<Location x="2" y="8" />
+   </Ammo>
+   <Obstacles>
+   		<Obstacle />
+   		<Obstacle x="4" y="10"/>
+   </Obstacles>
+</Level>

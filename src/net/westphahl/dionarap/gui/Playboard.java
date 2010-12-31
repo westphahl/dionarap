@@ -49,7 +49,7 @@ public class Playboard extends JPanel {
 	 * @param rows Number of rows.
 	 * @param cols Number of columns.
 	 */
-	public Playboard(MainWindow mWin, int rows, int cols) {
+	public Playboard(MainWindow mWin, int rows, int cols, String themeName) {
 		this.rows = rows;
 		this.cols = cols;
 		
@@ -58,7 +58,7 @@ public class Playboard extends JPanel {
 		this.fields = new JLabel[this.rows][this.cols];
 		
 		/* Set the default theme */
-		this.setTheme("Dracula");
+		this.setTheme(themeName);
 		
 		/* Use a grid layout */
 		this.setLayout(new GridLayout(this.rows, this.cols));

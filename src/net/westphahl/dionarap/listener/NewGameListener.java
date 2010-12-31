@@ -14,6 +14,9 @@ public class NewGameListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		MainWindow mainWindow = ((Navigator) (
 				(JComponent) e.getSource()).getTopLevelAncestor()).getMainWindow();
+		
+		mainWindow.initDefaultModel();
+		mainWindow.initGUI();
 		mainWindow.startGame();
 		mainWindow.requestFocus();
 	}

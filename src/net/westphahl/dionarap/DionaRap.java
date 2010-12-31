@@ -1,8 +1,6 @@
 package net.westphahl.dionarap;
 
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import net.westphahl.dionarap.gui.MainWindow;
 
 /**
@@ -12,6 +10,8 @@ import net.westphahl.dionarap.gui.MainWindow;
  *
  */
 public class DionaRap {
+	
+	private static MainWindow mainWindow = null;
 
 	/**
 	 * Run DionaRap
@@ -24,19 +24,14 @@ public class DionaRap {
 	        UIManager.setLookAndFeel(
 	            UIManager.getSystemLookAndFeelClassName());
 	    } 
-	    catch (UnsupportedLookAndFeelException e) {
+	    catch (Exception e) {
 	    	System.exit(1);
 	    }
-	    catch (ClassNotFoundException e) {
-	    	System.exit(1);
-	    }
-	    catch (InstantiationException e) {
-	    	System.exit(1);
-	    }
-	    catch (IllegalAccessException e) {
-	    	System.exit(1);
-	    }
-		new MainWindow("DionaRap");
+		DionaRap.mainWindow = new MainWindow("DionaRap");
+	}
+	
+	public static MainWindow getMainWindow() {
+		return DionaRap.mainWindow;
 	}
 
 }
