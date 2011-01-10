@@ -13,9 +13,9 @@ import net.westphahl.dionarap.gui.Keypad;
 import net.westphahl.dionarap.listener.NewGameListener;
 
 /**
- * Navigator which holds keypad, score and a button to start
- * a new game.
- * 
+ * Navigator, welcher die Tastatur, Punktestand und den
+ * Start-Button enthält.
+ *  
  * @author westphahl
  *
  */
@@ -29,12 +29,13 @@ public class Navigator extends JWindow {
 	private MainWindow mainWindow;
 	
 	/**
-	 * Constructor for the Navigator
+	 * Konstruktor für den Navigator
 	 * 
-	 * Positions the navigator relative to the given JFrame and
-	 * adds keypad, score area and button to start a new game.
+	 * Positioniert den Navigator relativ zum Hauptfenster und
+	 * fügt die Tastatur, Bereich für den Punktestand und den
+	 * Start-Button der Content-Pane hinzu.
 	 * 
-	 * @param mainWindow
+	 * @param mainWindow  Referenz auf das Hauptfenster
 	 */
 	public Navigator(MainWindow mainWindow) {
 		super(mainWindow);
@@ -58,34 +59,44 @@ public class Navigator extends JWindow {
 	}
 	
 	/**
-	 * Function for fetching the main window.
+	 * Getter-Methode für das Hauptfenster
 	 *
-	 * @return
+	 * @return  Referenz auf das Hauptfenster
 	 */
 	public MainWindow getMainWindow() {
 		return this.mainWindow;
 	}
 	
 	/**
-	 * Set the position of the navigator relative to
-	 * the main window.
+	 * Methode zur Positionierung des Navigators relativ zum
+	 * Hauptfenster.
 	 */
 	public void setPosition() {
 		bounds = this.mainWindow.getBounds();
 		this.setLocation(bounds.width + bounds.x + 25, bounds.y);
 	}
 
+	/**
+	 * Methode um den Punktestand zu aktualiiseren.
+	 * 
+	 * @param score  Punktestand
+	 */
 	public void setScore(int score) {
 		this.scoreArea.score.setText(Integer.toString(score));
 	}
 	
+	/**
+	 * Getter-Methode für den Start-Button
+	 * 
+	 * @return  Referenz auf den Start-Button
+	 */
 	public JButton getStartButton() {
 		return this.startButton;
 	}
 }
 
 /**
- * Score area
+ * Bereich für den Punktestand
  * 
  * @author westphahl
  *
@@ -97,9 +108,11 @@ class ScoreArea extends JPanel {
 	public JTextField score = new JTextField("0");
 	
 	/**
-	 * Constructor of the score area.
-	 * 
-	 * Includes a label for the score area and the score.
+	 * Konstruktor für den Punktestand-Bereich
+	 *  
+	 * Erzeugt die Beschriftung sowie das nicht editierbare 
+	 * Feld für den Punktestand. Zur Positionierung wird ein
+	 * BorderLayout verwendet.
 	 */
 	public ScoreArea() {
 		/* Use a border layout */

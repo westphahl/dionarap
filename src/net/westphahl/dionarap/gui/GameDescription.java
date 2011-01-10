@@ -6,12 +6,25 @@ import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 
+/**
+ * Dialogfenster, welches die Spielbeschreibung enthält.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 public class GameDescription extends JDialog {
 
 	private JEditorPane editorPane;
 	private JScrollPane scrollPane;
 	
+	/**
+	 * Konstruktur des Dialogfensters
+	 * 
+	 * Der Konstruktor läd die Spielbeschreibung aus einer mitgelieferten
+	 * HTML-Datei. Die HTML-Seite wird in einem Editor-Pane geladen und
+	 * über eine "JScrollPane" navigierbar gemacht. 
+	 */
 	public GameDescription() {
 		String fileURL = "file:///" + System.getProperty("user.dir") + 
 			"/help/game_description.html";

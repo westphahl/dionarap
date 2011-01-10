@@ -14,9 +14,9 @@ import de.fhwgt.dionarap.model.data.Grid;
 import de.fhwgt.dionarap.model.data.MTConfiguration;
 
 /**
- * The DionaRap main window
+ * DionaRap Hauptfenster
  * 
- * Holds the playboard of the game.
+ * Enthält das Spielbrett und die Menüleiste
  * 
  * @author westphahl
  *
@@ -33,10 +33,16 @@ public class MainWindow extends JFrame {
 	private String currentTheme = "Dracula";
 	
 	/**
-	 * Constructor of the main window
+	 * Konstruktur des Hauptfensters
 	 *
-	 * Adds the playboard as the only component
-	 * @param title
+	 * Der Konstruktor erzeugt eine Menü- und Spielbrett-Instanz und fügt
+	 * diese als Komponenten hinzu. Zusätzlich wird der Navigator erzeugt.
+	 * Weiterhin wird das Spiel für Multi-Threading konfiguriert und die
+	 * Spielelogik sowie die GUI initialisiert.Standardmäßig wird der Navigator
+	 * rechts neben dem Spielfeld angezeigt. 
+	 * Nach erfolgreicher Initialisierung wird ein neues Spiel gestartet.
+	 * 
+	 * @param title  Titel des Hauptfensters
 	 */
 	public MainWindow(String title) {
 		super(title);
@@ -48,8 +54,8 @@ public class MainWindow extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		/* Add listeners */
-		this.addComponentListener(new MainWindowListener());
-		this.addWindowListener(new MainWindowListener());
+		this.addComponentListener(new MainWindowListener(this));
+		this.addWindowListener(new MainWindowListener(this));
 		this.addKeyListener(new MovementListener());
 		this.addKeyListener(new WeaponListener());
 		
@@ -71,6 +77,9 @@ public class MainWindow extends JFrame {
 		this.startGame();
 	}
 	
+	/**
+	 * Methode zur Initialisierung der MultiThreading-Konfiguration.
+	 */
 	public void configMT() {
 		this.conf = new MTConfiguration();
 		this.conf.setAlgorithmAStarActive(true);
@@ -85,12 +94,26 @@ public class MainWindow extends JFrame {
 		this.conf.setDynamicOpponentWaitTime(false); // immer gleichlang warten
 	}
 	
+	/**
+	 * Methode zur Initialisierung des Default-Models.
+	 * 
+	 * Bei dem DionaRap-Model wird ein Listener registriert, welcher
+	 * für Veränderungen des Spielstatus verantwortlich ist.
+	 */
 	public void initDefaultModel() {
 		this.drModel = new DionaRapModel();
 		this.drModel.addModelChangedEventListener(
 				new ChangeStateListener(this));
 	}
 	
+	/**
+	 * Methode zur Initialisierung der GUI.
+	 * 
+	 * Die Methode entfernt das alte Spielfeld aus dem Hauptfenster und
+	 * erzeugt eine neues Instanz. Dies ist notwendig, da sich z.B. beim 
+	 * Einlesen eines Levels die Spielfeldgröße ändert.
+	 * Gleichzeigt wird auch die Position des Navigators korrigiert.
+	 */
 	public void initGUI() {
 		Grid grid = this.drModel.getGrid();
 		
@@ -114,6 +137,14 @@ public class MainWindow extends JFrame {
 		}
 	}
 	
+	/**
+	 * Methode zum Starten eines neuen Spiels.
+	 * 
+	 * Die Methode erzeugt eine neue Instanz des DionaRap-Controllers,
+	 * welcher für die Spielelogic zuständig ist.
+	 * Vorher muss mit der Methode "configMT()" die Multi-Threading-
+	 * Konfiguration erzeugt werden.
+	 */
 	public void startGame() {		
 		this.drController = new DionaRapController(this.drModel);
 		this.drController.setMultiThreaded(this.conf);
@@ -122,26 +153,50 @@ public class MainWindow extends JFrame {
 		this.navigator.getStartButton().setEnabled(false);
 	}
 	
+	/**
+	 * Getter-Methode für den Navigator.
+	 * @return
+	 */
 	public Navigator getNavigator() {
 		return this.navigator;
 	}
-	
+
+	/**
+	 * Getter-Methode für das Spielfeld.
+	 * @return
+	 */
 	public Playboard getPlayboard() {
 		return this.playboard;
 	}
 
+	/**
+	 * Getter-Methode für das DionaRap-Model.
+	 * @return
+	 */
 	public DionaRapModel getDRModel() {
 		return this.drModel;
 	}
 
+	/**
+	 * Getter-Methode für den DionaRap-Controller.
+	 * @return
+	 */
 	public DionaRapController getDRController() {
 		return this.drController;
 	}
 	
+	/**
+	 * Getter-Methode für die Multi-Threading Konfiguration.
+	 * @return
+	 */
 	public MTConfiguration getMTconf() {
 		return this.conf;
 	}
 
+	/**
+	 * Setter-Methode für den aktuellen Theme.
+	 * @param themeName  Name des Themes
+	 */
 	public void setCurrentTheme(String themeName) {
 		this.currentTheme = themeName;
 		this.playboard.setTheme(this.currentTheme);

@@ -9,7 +9,7 @@ import net.westphahl.dionarap.listener.MovementListener;
 import net.westphahl.dionarap.listener.WeaponListener;
 
 /**
- * The keypad which holds the buttons for in game navigation.
+ * Tastatur, welche die Bedienelemente für DionaRap enthält.
  * 
  * @author westphahl
  *
@@ -19,9 +19,10 @@ public class Keypad extends JPanel {
 	
 	private JButton keys[] = new JButton[9];
 	/**
-	 * Constructor for the keypad
+	 * Konstruktor für die Tastatur
 	 * 
-	 * Creates the numbered buttons.
+	 * Der Konstruktor ist für die Erzeugung der Navigations-Buttons
+	 * zuständig. Diese werden mit einem Grid-Layout angeordnet.
 	 */
 	public Keypad() {
 		/* Use a grid layout for the keypad */

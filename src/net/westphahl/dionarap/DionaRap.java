@@ -4,17 +4,15 @@ import javax.swing.UIManager;
 import net.westphahl.dionarap.gui.MainWindow;
 
 /**
- * Class for running DionaRap
+ * DionaRap "Main-Klasse" zum Starten des Spiels
  * 
  * @author westphahl
  *
  */
 public class DionaRap {
-	
-	private static MainWindow mainWindow = null;
 
 	/**
-	 * Run DionaRap
+	 * Starten/Erzeugen des DionaRap-Hauptfensters
 	 * 
 	 * @param args
 	 */
@@ -27,11 +25,6 @@ public class DionaRap {
 	    catch (Exception e) {
 	    	System.exit(1);
 	    }
-		DionaRap.mainWindow = new MainWindow("DionaRap");
+		new MainWindow("DionaRap");
 	}
-	
-	public static MainWindow getMainWindow() {
-		return DionaRap.mainWindow;
-	}
-
 }

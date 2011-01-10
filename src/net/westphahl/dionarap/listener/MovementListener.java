@@ -10,6 +10,12 @@ import javax.swing.JComponent;
 import net.westphahl.dionarap.gui.MainWindow;
 import net.westphahl.dionarap.gui.Navigator;
 
+/**
+ * Listener für die Spielerbewegung.
+ * 
+ * @author westphahl
+ *
+ */
 public class MovementListener implements KeyListener, ActionListener {
 
 	@Override
@@ -18,6 +24,9 @@ public class MovementListener implements KeyListener, ActionListener {
 	@Override
 	public void keyReleased(KeyEvent e) {}
 
+	/**
+	 * Reaktion auf Tastatureingaben.
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		MainWindow mainWindow = (MainWindow) e.getSource();
@@ -28,6 +37,9 @@ public class MovementListener implements KeyListener, ActionListener {
 		}
 	}
 
+	/**
+	 * Reaktion auf Eingaben des Navigators.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Navigator navigator = (Navigator) (

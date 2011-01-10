@@ -19,6 +19,12 @@ import net.westphahl.dionarap.listener.ThemeMenuListener;
 import net.westphahl.dionarap.listener.ToggleNavigatorMenuListener;
 import net.westphahl.dionarap.listener.TokenHelpListener;
 
+/**
+ * Menüleiste des Hauptfensters.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
 
@@ -27,6 +33,13 @@ public class MenuBar extends JMenuBar {
 	private LevelMenu levelMenu;
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktor der Hauptmenüleiste
+	 * 
+	 * Erzeugt die Untermenüs für Konfiguration, Hilfe und Levels.
+	 * 
+	 * @param mw  Referenz auf das Hauptfenster
+	 */
 	public MenuBar(MainWindow mw) {
 		this.mainWin = mw;
 		this.configMenu = new ConfigMenu(this.mainWin);
@@ -39,6 +52,12 @@ public class MenuBar extends JMenuBar {
 	}
 }
 
+/**
+ * Menü für die Konfiguration.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 class ConfigMenu extends JMenu {
 	
@@ -47,6 +66,15 @@ class ConfigMenu extends JMenu {
 	private ToggleNavigatorMItem toggleNavigatorMItem;
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktor des Konfigurations-Menüs.
+	 * 
+	 * Erzeugt Untermenüs zur Auswahl des Look&Feel sowie des Themes.
+	 * Zusätzlich enthält es einen Menüpunkt um den Navigator ein- oder
+	 * auszublenden.
+	 * 
+	 * @param mw  Instanz des Hauptfensters
+	 */
 	public ConfigMenu(MainWindow mw) {
 		super("Konfiguration");
 		this.mainWin = mw;
@@ -60,12 +88,24 @@ class ConfigMenu extends JMenu {
 	}
 	
 }
-
+/**
+ * Menü zur Auswahl der verfügbaren Themes.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 class ThemeMenu extends JMenu {
 	
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktor des Theme-Menüs.
+	 * 
+	 * Der Konstruktor erzeugt für alle Unterordner im Theme-Verzeichnis
+	 * einen neuen Menüpunkt mit jeweiligem Namen. 
+	 * @param mw
+	 */
 	public ThemeMenu(MainWindow mw) {
 		super("Themes");
 		this.mainWin = mw;
@@ -91,12 +131,25 @@ class ThemeMenu extends JMenu {
 	}
 }
 
+/**
+ * Menü zur Auswahl der installierten Look&Feel.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 class LookAndFeelMenu extends JMenu {
 	
 	private JMenuItem[] LAFItems;
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktor für das Look&Feel-Menü.
+	 * 
+	 * Erzeugen eines Untermenüpunktes für jedes installierte Look&Feel.
+	 * 
+	 * @param mw  Referenz des Hauptfensters
+	 */
 	public LookAndFeelMenu(MainWindow mw) {
 		super("Look & Feel");
 		this.mainWin = mw;
@@ -123,11 +176,22 @@ class LookAndFeelMenu extends JMenu {
 	}
 }
 
+/**
+ * Menüpunkt zum Ein-/Ausblenden des Navigators.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 class ToggleNavigatorMItem extends JCheckBoxMenuItem {
 	
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktur für den Navigator-Menüpunkt.
+	 * 
+	 * @param mw  Referenz auf das Hauptfenster
+	 */
 	public ToggleNavigatorMItem(MainWindow mw) {
 		super("Navigator ausblenden");
 		this.mainWin = mw;
@@ -136,87 +200,77 @@ class ToggleNavigatorMItem extends JCheckBoxMenuItem {
 	}
 }
 
+/**
+ * Hilemenü für die Spielbeschreibung und -figuren.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 class HelpMenu extends JMenu {
 	
-	private TokenHelpMItem tokenHelpMItem;
-	private GameDescriptionMItem gameDescriptionMItem;
+	private JMenuItem tokenHelp;
+	private JMenuItem gameDescription;
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktor für das Hilfemenü.
+	 * 
+	 * Erzeugt die Menüpunkte für die Spielbeschreibung und
+	 * Hilfe zu den Spielfiguren, sowie Registrierung der
+	 * zugehörigen Listener.
+	 * 
+	 * @param mw  Referenz auf das Hauptfenster
+	 */
 	public HelpMenu(MainWindow mw) {
 		super("Hilfe");
 		this.mainWin = mw;
 		
-		this.tokenHelpMItem = new TokenHelpMItem(this.mainWin);
-		this.gameDescriptionMItem = new GameDescriptionMItem();
+		this.tokenHelp = new JMenuItem("Spielfiguren anzeigen");
+		this.tokenHelp.addActionListener(
+				new TokenHelpListener(this.mainWin));
+		this.gameDescription = new JMenuItem("Spielbeschreibung anzeigen");
+		this.gameDescription.addActionListener(
+				new GameDescriptionListener());
 		
-		this.add(this.tokenHelpMItem);
-		this.add(this.gameDescriptionMItem);
+		this.add(this.tokenHelp);
+		this.add(this.gameDescription);
 	}
 }
 
-
-@SuppressWarnings("serial")
-class TokenHelpMItem extends JMenuItem {
-	
-	private MainWindow mainWin;
-	
-	public TokenHelpMItem(MainWindow mw) {
-		super("Spielfiguren anzeigen");
-		this.mainWin = mw;
-		
-		this.addActionListener(new TokenHelpListener(this.mainWin));
-	}
-}
-
-@SuppressWarnings("serial")
-class GameDescriptionMItem extends JMenuItem {
-	
-	public GameDescriptionMItem() {
-		super("Spielbeschreibung");
-		
-		this.addActionListener(new GameDescriptionListener());
-	}
-}
-
-@SuppressWarnings("serial")
-class LevelReaderMItem extends JMenuItem {
-	
-	private MainWindow mainWin;
-	
-	public LevelReaderMItem(MainWindow mw) {
-		super("Level einlesen");
-		this.mainWin = mw;
-		
-		this.addActionListener(new LevelReaderListener(this.mainWin));
-	}
-}
-
-@SuppressWarnings("serial")
-class LevelEditorMItem extends JMenuItem {
-	
-	public LevelEditorMItem(MainWindow mw) {
-		super("Level erstellen");
-		
-		this.addActionListener(new LevelEditorListener());
-	}
-}
-
+/**
+ * Levelmenü
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 class LevelMenu extends JMenu {
 	
-	private JMenuItem levelReaderMItem;
-	private JMenuItem levelEditorMItem;
+	private JMenuItem levelReader;
+	private JMenuItem levelEditor;
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktor des Levelmenüs.
+	 * 
+	 * Erzeugen der Untermenüpunkte zum Einlesen und Erstellen
+	 * neuer Levels mit zugehörigen Listenern.
+	 * 
+	 * @param mw  Referenz auf das Hauptfenster
+	 */
 	public LevelMenu(MainWindow mw) {
 		super("Levels");
 		this.mainWin = mw;
 		
-		this.levelReaderMItem = new LevelReaderMItem(this.mainWin);
-		this.levelEditorMItem = new LevelEditorMItem(this.mainWin);
+		this.levelReader = new JMenuItem("Level einlesen");
+		this.levelReader.addActionListener(
+				new LevelReaderListener(this.mainWin));
+		this.levelEditor = new JMenuItem("Level erstellen");
+		this.levelEditor.addActionListener(
+				new LevelEditorListener());
 		
-		this.add(this.levelReaderMItem);
-		this.add(this.levelEditorMItem);
+		this.add(this.levelReader);
+		this.add(this.levelEditor);
 	}
 }

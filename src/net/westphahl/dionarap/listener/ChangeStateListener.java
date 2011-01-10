@@ -8,9 +8,9 @@ import de.fhwgt.dionarap.model.events.GameStatusEvent;
 import de.fhwgt.dionarap.model.listener.DionaRapListener;
 
 /**
- * Event listener for model and status change events.
+ * Listener für Statusänderungen.
  * 
- * @author Simon Westphahl
+ * @author westphahl
  *
  */
 public class ChangeStateListener implements DionaRapListener {
@@ -18,17 +18,17 @@ public class ChangeStateListener implements DionaRapListener {
 	private MainWindow mainWindow;
 	
 	/**
-	 * Constructor for the ChangeListener.
-	 * Saves a reference of the main window for further use.
+	 * Konstruktor für den ChangeStateListener.
 	 * 
-	 * @param mainWin
+	 * @param mainWin  Referenz auf das Hauptfenster
 	 */
 	public ChangeStateListener(MainWindow mWin) {
 		this.mainWindow = mWin;
 	}
 	
 	/**
-	 * Redraws the pawns in case of a model change event.
+	 * Methode veranlasst das Neuzeichnen der Figuren bei einer
+	 * Änderung der Spielerpositionen.
 	 */
 	@Override
 	public void modelChanged(DionaRapChangedEvent e) {
@@ -38,7 +38,8 @@ public class ChangeStateListener implements DionaRapListener {
 	}
 
 	/**
-	 * Handles the situation when a game is won/lost.
+	 * Methode zur Behandlung des Falls, wenn ein Spiel gewonnen oder
+	 * verloren wurde.
 	 */
 	@Override
 	public void statusChanged(GameStatusEvent e) {

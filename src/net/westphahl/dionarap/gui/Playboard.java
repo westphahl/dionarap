@@ -20,7 +20,7 @@ import de.fhwgt.dionarap.model.objects.Player;
 import de.fhwgt.dionarap.model.objects.Vortex;
 
 /**
- * The playboard which contains the fields for the tokens.
+ * Spielfeld, welches die Felder und Spielfiguren enthält.
  * 
  * @author Simon Westphahl
  */
@@ -43,11 +43,15 @@ public class Playboard extends JPanel {
 	private String themePath;
 	
 	/**
-	 * Creates a playboard according to the supplied
-	 * number of rows and columns.
+	 * Konstruktor für das Spielfeld.
 	 * 
-	 * @param rows Number of rows.
-	 * @param cols Number of columns.
+	 * Erzeugt ein schachbrettartiges Muster in der angegebenen Größe.
+	 * Verwendung eines GridLayouts.
+	 * 
+	 * @param mWin  Referenz auf das Hauptfenster
+	 * @param rows  Anzahl der Zeilen
+	 * @param cols  Anzahl der Spalten
+	 * @param themeName  Name des zu verwendenden Themes
 	 */
 	public Playboard(MainWindow mWin, int rows, int cols, String themeName) {
 		this.rows = rows;
@@ -84,7 +88,7 @@ public class Playboard extends JPanel {
 	}
 	
 	/**
-	 * Function for (re)drawing the pawns.
+	 * Methode zum Zeichnen der Spielfiguren.
 	 */
 	public void drawPawns() {
 		int numPawns = this.mainWindow.getDRModel().getAllPawns().length;
@@ -111,16 +115,18 @@ public class Playboard extends JPanel {
 	}
 	
 	/**
-	 * Draws the vortexes in the four corners.
+	 * Methode zum Zeichnen der Vortex-Objekte.
+	 * 
+	 * @param vortex  Refernz auf das Vortext-Objekt
 	 */
 	public void drawVortex(AbstractPawn vortex) {
 		this.fields[vortex.getX()][vortex.getY()].setIcon(this.vortexIcon);
 	}
 	
 	/**
-	 * Draws the player.
+	 * Methode zum Zeichnen des Spielers.
 	 * 
-	 * @param player
+	 * @param p  Referenz auf die Spielfigur
 	 */
 	public void drawPlayer(AbstractPawn p) {
 		Player player = (Player) p;
@@ -129,18 +135,18 @@ public class Playboard extends JPanel {
 	}
 	
 	/**
-	 * Draws the given enemy.
+	 * Methode zum Zeichnen eines Gegeners.
 	 * 
-	 * @param enemy
+	 * @param enemy  Referenz auf einen Gegner
 	 */
 	public void drawEnemy(AbstractPawn enemy) {
 		this.fields[enemy.getX()][enemy.getY()].setIcon(this.enemyIcon);
 	}
 
 	/**
-	 * Draws a destroyed field.
+	 * Methode zum Zeichnen eines zerstörten Feldes.
 	 * 
-	 * @param destruction
+	 * @param destruction  Referenz auf ein zerstörtes Feld
 	 */
 	public void drawDestroyedField(AbstractPawn destruction) {
 		this.fields[destruction.getX()][destruction.getY()].setIcon(
@@ -148,25 +154,25 @@ public class Playboard extends JPanel {
 	}
 
 	/**
-	 * Draws a barrier.
+	 * Methode zum Zeichnen eines Hindernis.
 	 * 
-	 * @param barrier
+	 * @param barrier  Referenz auf ein Hindernis
 	 */
 	public void drawBarrier(AbstractPawn barrier) {
 		this.fields[barrier.getX()][barrier.getY()].setIcon(this.barrierIcon);
 	}
 	
 	/**
-	 * Draws ammo field.
+	 * Methode zum Zeichnen eines Munitionsfeldes.
 	 * 
-	 * @param ammo
+	 * @param ammo  Referenz auf Munition
 	 */
 	public void drawAmmo(AbstractPawn ammo) {
 		this.fields[ammo.getX()][ammo.getY()].setIcon(this.ammoIcon);
 	}
 	
 	/**
-	 * Erase all fields.
+	 * Methode zum Löschen aller Spielfiguren.
 	 */
 	public void eraseFields() {
 		for (int i = 0; i < this.cols; i++) {
@@ -176,6 +182,14 @@ public class Playboard extends JPanel {
 		}
 	}
 	
+	/**
+	 * Methode zum Ändern des Themes.
+	 * 
+	 * Um die das neue Theme zu übernehmen, muss die Methode drawPawns()
+	 * aufgerufen werden.
+	 * 
+	 * @param themeName  Name des neuen Themes
+	 */
 	public void setTheme(String themeName) {
 		this.themePath = System.getProperty("user.dir") 
 			+ File.separator + "themes"
@@ -195,14 +209,29 @@ public class Playboard extends JPanel {
 		this.gameWonIcon = new ImageIcon(this.themePath + "win.gif");
 	}
 
+	/**
+	 * Getter-Methode für das Gewonnen-Icon.
+	 * 
+	 * @return  Gewonnen-Icon
+	 */
 	public Icon getGameWonIcon() {
 		return this.gameWonIcon;
 	}
 
+	/**
+	 * Getter-Methode für das Game Over-Icon.
+	 * 
+	 * @return GameOver-Icon
+	 */
 	public Icon getGameOverIcon() {
 		return this.gameOverIcon;
 	}
 
+	/**
+	 * Getter-Methode für den Pfad des aktuellen Themes.
+	 * 
+	 * @return  Theme-Pfad
+	 */
 	public String getThemePath() {
 		return this.themePath;
 	}

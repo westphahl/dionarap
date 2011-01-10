@@ -10,9 +10,23 @@ import java.awt.MediaTracker;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+/**
+ * Dialogfenster für die Figurenhilfe.
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 public class TokenHelp extends JDialog {
 	
+	/**
+	 * Konstruktor für die Hilfe zu den Spielfiguren.
+	 * 
+	 * Dient als Container für die Panels der einzelnen Spielfiguren.
+	 * Positionierung der Panels über ein FlowLayout.
+	 * 
+	 * @param mainWindow  Referenz auf das Hauptfenster
+	 */
 	public TokenHelp(MainWindow mainWindow) {
 		String themePath = mainWindow.getPlayboard().getThemePath();
 		MediaTracker mediaTracker = new MediaTracker(this);
@@ -42,12 +56,27 @@ public class TokenHelp extends JDialog {
 	}
 }
 
+/**
+ * Containerelement für eine Spielfigur
+ * 
+ * @author westphahl
+ *
+ */
 @SuppressWarnings("serial")
 class TokenPanel extends JPanel {
 	
 	private Image tokenImage;
 	private String tokenLabel;
 	
+	/**
+	 * Konstruktor für den Container.
+	 * 
+	 * Die Spielfigur sowie die Beschriftung werden in das
+	 * Panel hineingezeichnet.
+	 * 
+	 * @param i  Bild der Spielfigur
+	 * @param label  Beschriftung der Spielfigur
+	 */
 	public TokenPanel(Image i, String label) {
 		this.tokenImage = i;
 		this.tokenLabel = label;

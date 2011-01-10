@@ -7,35 +7,60 @@ import java.awt.event.WindowListener;
 
 import net.westphahl.dionarap.gui.MainWindow;
 
+/**
+ * Listener für Events des Hauptfensters.
+ * 
+ * @author westphahl
+ *
+ */
 public class MainWindowListener implements ComponentListener, WindowListener {
 
-	private void setNavigatorVisible(ComponentEvent e, boolean visible) {
-		MainWindow mWin = (MainWindow) e.getComponent();
-		mWin.getNavigator().setVisible(visible);
+	private MainWindow mWin;
+	
+	/**
+	 * Konstruktor des MainWindowListeners.
+	 * 
+	 * @param mw  Referenz auf das Hauptfenster.
+	 */
+	public MainWindowListener(MainWindow mw) {
+		this.mWin = mw;
 	}
 	
+	/**
+	 * Ausblenden des Navigators, wenn das Hauptfenster.
+	 * nicht sichtbar ist.
+	 */
 	@Override
 	public void componentHidden(ComponentEvent e) {
-		this.setNavigatorVisible(e, false);
+		mWin.getNavigator().setVisible(false);
 	}
 
+	/**
+	 * Positionierung des Navigators beim Verschieben des Hauptfensters.
+	 */
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		MainWindow mWin = (MainWindow) e.getComponent();
-		mWin.getNavigator().setPosition();
+		this.mWin.getNavigator().setPosition();
  	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {}
 
+	/**
+	 * Einblenden des Navigators, wenn das Hauptfenster sichtbar ist.
+	 */
 	@Override
 	public void componentShown(ComponentEvent e) {
-		this.setNavigatorVisible(e, true);
+		this.mWin.getNavigator().setVisible(true);
 	}
 
+	/**
+	 * Einblenden des Navigators, wenn das Hauptfenster
+	 * den Fokus besitzt.
+	 */
 	@Override
 	public void windowActivated(WindowEvent e) {
-		this.setNavigatorVisible(e, true);	
+		this.mWin.getNavigator().setVisible(true);
 	}
 
 	@Override
@@ -44,19 +69,31 @@ public class MainWindowListener implements ComponentListener, WindowListener {
 	@Override
 	public void windowClosing(WindowEvent e) {}
 
+	/**
+	 * Ausblenden des Navigators, wenn das Hauptfenster
+	 * deaktiviert wird.
+	 */
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		this.setNavigatorVisible(e, false);
+		this.mWin.getNavigator().setVisible(false);
 	}
 
+	/**
+	 * Einblenden des Navigators, wenn das Hauptfenster
+	 * wiederhergestellt wird.
+	 */
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		this.setNavigatorVisible(e, true);
+		this.mWin.getNavigator().setVisible(true);
 	}
 
+	/**
+	 * Ausblenden des Navigators, wenn das Hauptfenster
+	 * minimiert wurde.
+	 */
 	@Override
 	public void windowIconified(WindowEvent e) {
-		this.setNavigatorVisible(e, false);
+		this.mWin.getNavigator().setVisible(false);
 	}
 
 	@Override

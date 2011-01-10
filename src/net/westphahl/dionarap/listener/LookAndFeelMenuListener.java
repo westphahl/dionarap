@@ -9,14 +9,28 @@ import javax.swing.UIManager;
 
 import net.westphahl.dionarap.gui.MainWindow;
 
+/**
+ * Listener für das Look&Feel-Menü
+ * 
+ * @author westphahl
+ *
+ */
 public class LookAndFeelMenuListener implements ActionListener {
 	
 	private MainWindow mainWin;
 	
+	/**
+	 * Konstruktor des Look&Feel-Listeners.
+	 * 
+	 * @param mw  Referenz auf das Hauptfenster
+	 */
 	public LookAndFeelMenuListener(MainWindow mw) {
 		this.mainWin = mw;
 	}
 
+	/**
+	 * Update des Look&Feels für das Hauptfenster und den Navigator.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		JMenuItem lookAndFeelItem = (JMenuItem) ae.getSource();
