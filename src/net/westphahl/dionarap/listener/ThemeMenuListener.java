@@ -3,6 +3,10 @@ package net.westphahl.dionarap.listener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
 import net.westphahl.dionarap.gui.MainWindow;
 
 /**
@@ -13,6 +17,8 @@ import net.westphahl.dionarap.gui.MainWindow;
  */
 public class ThemeMenuListener implements ActionListener {
 
+	/**
+	 */
 	private MainWindow mainWin;
 	
 	/**
@@ -29,6 +35,19 @@ public class ThemeMenuListener implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		MainWindow mw = (MainWindow) ((JMenuItem) ae.getSource()).getTopLevelAncestor();
+		/*MainWindow mw = (MainWindow)
+			((JMenu)
+				((JPopupMenu)
+						((JMenu) 
+								((JPopupMenu) 
+										((JMenuItem) ae.getSource()).getParent()
+								).getInvoker()
+						).getParent()
+				).getInvoker()
+			).getTopLevelAncestor();
+			*/
+		System.out.println(mw);
 		this.mainWin.setCurrentTheme(ae.getActionCommand());
 	}
 
